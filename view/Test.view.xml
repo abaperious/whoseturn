@@ -11,9 +11,8 @@
 				noDataText="{worklistView>/tableNoDataText}"
 				updateFinished="onUpdateFinished"
 				width="auto"
-				items="{
-					path: 'frontEnd>/Users'
-				}">
+
+				rows="{path:'frontEnd>/Users'}"
 				<headerToolbar>
 					<Toolbar>
 						<Title
