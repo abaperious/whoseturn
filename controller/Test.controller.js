@@ -25,8 +25,8 @@ sap.ui.define([
             
                 
             
-            this._router = this.getOwnerComponent().getRouter();
-            this._router.getRoute("reprint").attachPatternMatched(this._onRouteMatched, this);
+//            this._router = this.getOwnerComponent().getRouter();
+//            this._router.getRoute("reprint").attachPatternMatched(this._onRouteMatched, this);
 
 //            oView.addDependent(sap.ui.xmlfragment(oView.getId(), "arvato.tm.labelEngine.view.fragment.batchProcessing.ProcessDialog", this));
 //            oView.addDependent(sap.ui.xmlfragment(oView.getId(), "arvato.tm.labelEngine.view.fragment.batchProcessing.ProcessMessageDialog", this));
