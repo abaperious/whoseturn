@@ -24,7 +24,7 @@ sap.ui.define([
             		{ name: "Szymon", isTraveling: false, isDriving: false },
             		{ name: "Maciej", isTraveling: false, isDriving: false },
             	]
-            }), "frontEnd");
+            }));
 
             
                 
