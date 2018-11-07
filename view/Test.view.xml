@@ -2,71 +2,114 @@
    xmlns="sap.m"
    xmlns:mvc="sap.ui.core.mvc"
    xmlns:table="sap.ui.table"
+   xmlns:core="sap.ui.core"
    controllerName="sap.ui.demo.whoseturn.controller.Test">
    <Text text="Hello World"/>
-   		<table:Table  id="FilesTree"
-		    	      				  width="auto"
-					                  rows="{path:'frontEnd>/FileList', parameters: {arrayNames:['logEntries']}}"
-					                  selectionMode="None"
-					                  enableSelectAll="false"
-        							  expandFirstLevel="false"
-			            			  >
-						<table:layoutData>
-							<l:GridData span="L12 M12 S12" />
-						</table:layoutData>
-<!-- 		                <table:toolbar> -->
-<!-- 		                    <OverflowToolbar> -->
-<!-- 				                <ToolbarSpacer/> -->
-<!-- 								<Button text="Gernerate PDF Collective" press="onPDFCollective" type="Emphasized" visible="{frontEnd>/ToolbarVisible/FileAction}"  /> -->
-<!-- 								<Button text="Send PDF via Mail" press="onPDFMailCollective" type="Emphasized" visible="{frontEnd>/ToolbarVisible/FileAction}"  /> -->
-<!-- 								<Button text="Send to Printer" press="onPrintCollective" type="Emphasized" visible="{frontEnd>/ToolbarVisible/FileAction}" /> -->
-<!-- 								<Button text="Order Entry" press="onOrderEntryCollective" type="Emphasized" visible="{frontEnd>/ToolbarVisible/FileAction}" /> -->
-<!-- 								<Button text="Download" press="onDownload" type="Emphasized" visible="{frontEnd>/ToolbarVisible/DownloadAction}" /> -->
-<!-- 								<Button text="Retry" press="onRetry" type="Emphasized" visible="{frontEnd>/ToolbarVisible/RetryAction}" /> -->
-<!-- 		                    </OverflowToolbar> -->
-<!-- 		                </table:toolbar> -->
-		                <table:columns>
-		                    <table:Column width="8rem">
-		                        <Label text="{i18n>AWB}"/>
-		                        <table:template>
-			                    	<Text text="{frontEnd>AWB}"/>
-		                        </table:template>
-		                    </table:Column>
-		                    <table:Column width="5rem">
-		                        <Label text="{i18n>FOID}"/>
-		                        <table:template>
-			                    	<Text text="{frontEnd>FOID}"/>
-		                        </table:template>
-		                    </table:Column>
-		                    <table:Column width="6rem">
-		                        <Label text="{i18n>CreateDate}"/>
-		                        <table:template>
-		                            <Text text="{ path: 'frontEnd>Crea',
-												    type: 'sap.ui.model.type.DateTime',
-													       formatOptions: {
-													 		style: 'short'
-											          	   }
-												  }"/>
-		                        </table:template>
-		                    </table:Column>
-		                    <table:Column width="6rem">
-		                        <Label text="{i18n>OrderPartyKey}"/>
-		                        <table:template>
-		                            <Text text="{frontEnd>OrderParty}"/>
-		                        </table:template>
-		                    </table:Column>
-		                    <table:Column width="9rem">
-		                        <Label text="{i18n>OrderPartyDesc}"/>
-		                        <table:template>
-		                            <Text text="{frontEnd>OrderPartyDesc}"/>
-		                        </table:template>
-		                    </table:Column>
-		                    <table:Column width="3rem">
-		                        <Label text="{i18n>Print}"/>
-		                        <table:template>
-		                            <Button text="" press="" type="Emphasized" icon="sap-icon://print" />
-		                        </table:template>
-		                    </table:Column>
-		                </table:columns>
-		            </table:Table>
+   		<Table id="idProductsTable"
+		inset="false"
+		items="{
+			path: '/ProductCollection',
+			sorter: {
+				path: 'Name'
+			}
+		}">
+		<headerToolbar>
+			<Toolbar>
+				<content>
+					<Title text="Products" level="H2"/>
+					<ToolbarSpacer />
+					<ComboBox id="idPopinLayout"
+						placeholder="Popin layout options"
+						change="onPopinLayoutChanged">
+						<items>
+							<core:Item  text="Block"
+								key="Block"/>
+							<core:Item  text="Grid Large"
+								key="GridLarge"/>
+							<core:Item  text="Grid Small"
+								key="GridSmall"/>
+						</items>
+					</ComboBox>
+					<MultiComboBox id="idSticky"
+						placeholder="Sticky options"
+						selectionFinish="onSelectionFinish"
+						width="15%">
+						<items>
+							<core:Item  text="Column headers"
+								key="ColumnHeaders"/>
+							<core:Item  text="Header Toolbar"
+								key="HeaderToolbar"/>
+							<core:Item  text="Info Toolbar"
+								key="InfoToolbar"/>
+						</items>
+					</MultiComboBox>
+					<ToggleButton id="toggleInfoToolbar"
+						text="Hide/Show InfoToolbar"
+						press="onToggleInfoToolbar" />
+				</content>
+			</Toolbar>
+		</headerToolbar>
+		<infoToolbar>
+			<Toolbar active="ture">
+				<Label text="Wide range of available products"/>
+			</Toolbar>
+		</infoToolbar>
+		<columns>
+			<Column
+				width="12em">
+				<Text text="Product" />
+			</Column>
+			<Column
+				minScreenWidth="Tablet"
+				demandPopin="true">
+				<Text text="Supplier" />
+			</Column>
+			<Column
+				minScreenWidth="Desktop"
+				demandPopin="true"
+				hAlign="End">
+				<Text text="Dimensions" />
+			</Column>
+			<Column
+				minScreenWidth="Desktop"
+				demandPopin="true"
+				hAlign="Center">
+				<Text text="Weight" />
+			</Column>
+			<Column
+				hAlign="End">
+				<Text text="Price" />
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem>
+				<cells>
+					<ObjectIdentifier
+						title="{Name}"
+						text="{ProductId}"/>
+					<Text
+						text="{SupplierName}" />
+					<Text
+						text="{Width} x {Depth} x {Height} {DimUnit}" />
+					<ObjectNumber
+						number="{WeightMeasure}"
+						unit="{WeightUnit}"
+						state="{
+							parts: [
+								{path: 'WeightMeasure'},
+								{path: 'WeightUnit'}
+							],
+							formatter: 'sap.m.sample.Table.Formatter.weightState'
+						}" />
+					<ObjectNumber
+							number="{
+								parts:[{path:'Price'},{path:'CurrencyCode'}],
+								type: 'sap.ui.model.type.Currency',
+								formatOptions: {showMeasure: false}
+							}"
+							unit="{CurrencyCode}" />
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
 </mvc:View>
