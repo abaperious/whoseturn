@@ -10,7 +10,7 @@
 					                  selectionMode="None"
 					                  enableSelectAll="false"
         							  expandFirstLevel="false"
-			            			  rowSelectionChange="onFileSelect">
+			            			  >
 						<table:layoutData>
 							<l:GridData span="L12 M12 S12" />
 						</table:layoutData>
@@ -64,7 +64,7 @@
 		                    <table:Column width="3rem">
 		                        <Label text="{i18n>Print}"/>
 		                        <table:template>
-		                            <Button text="" press="onPrint" type="Emphasized" icon="sap-icon://print" />
+		                            <Button text="" press="" type="Emphasized" icon="sap-icon://print" />
 		                        </table:template>
 		                    </table:Column>
 		                </table:columns>
