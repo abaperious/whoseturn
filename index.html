@@ -28,18 +28,30 @@
 				})
 			});
 			// create the second page with a back button
+			var that = this;
 			var page2 = new sap.m.Page("page2", {
 				title : "Hello Page 2",
 				showNavButton : true,
 				navButtonPress : function () {
 					// go back to the previous page
 					app.back();
-				}
+				},
+				content : new sap.m.Button({
+					text: "go to test page",
+					press: function(){
+						var oRouter = sap.ui.core.UIComponent.getRouterFor(that);
+						  oRouter.navTo("second");
+					}
+				})
 			});
 			// add both pages to the app
 			app.addPage(page1).addPage(page2);
 			// place the app into the HTML document
 			app.placeAt("content");
+			var page3 = new sap.m.Page("pageTest", {
+				title: "test page",
+				
+			});
 		});
 	</script>
 </head>
