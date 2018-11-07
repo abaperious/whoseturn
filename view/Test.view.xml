@@ -33,12 +33,18 @@
 							<Text
 								id="nameColumnTitle"
 								text="{i18n>TableNameColumnTitle}"/>
+								<table:template>
+		                            <Text text="{frontEnd>name}"/>
+		                        </table:template>
 						</Column>
 						<Column
 							id="supplierNameColumn"
 							demandPopin="false"
 							minScreenWidth="Tablet">
 							<Text text="{i18n>TableSupplierColumnTitle}"/>
+							<table:template>
+		                            <CheckBox text="{frontEnd>isTraveling}"/>
+		                        </table:template>
 						</Column>
 						<Column
 							id="unitPriceColumn"
@@ -46,6 +52,9 @@
 							demandPopin="true"
 							minScreenWidth="Tablet">
 							<Text text="{i18n>TablePriceColumnTitle}"/>
+							<table:template>
+		                            <CheckBox text="{frontEnd>isDriving}"/>
+		                        </table:template>
 						</Column>
 				</columns>
 
