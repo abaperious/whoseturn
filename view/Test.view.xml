@@ -8,6 +8,18 @@
 		items="{
 			path: 'frontEnd>/Users'
 		}">
-		
+			<items>
+			<ColumnListItem>
+				<cells>
+					<ObjectIdentifier
+						title="{Name}"
+						text="{name}"/>
+					<Checkbox
+						selected="{isTraveling}" />
+					<Checkbox
+						selected="{isDriving}" />
+				</cells>
+			</ColumnListItem>
+		</items>
 	</Table>
 </mvc:View>
