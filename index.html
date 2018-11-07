@@ -64,13 +64,7 @@
 			            })
 				
 			});
-			shell.getApp().setModel(new JSONModel({
-            	Users: [
-            		{ name: "Łukasz", isTraveling: false, isDriving: false },
-            		{ name: "Szymon", isTraveling: false, isDriving: false },
-            		{ name: "Maciej", isTraveling: false, isDriving: false },
-            	]
-            }, "frontEnd"));
+			
 			// add both pages to the app
 			shell.getApp().addPage(page1).addPage(page2).addPage(page3);
 		});
