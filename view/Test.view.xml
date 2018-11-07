@@ -14,9 +14,9 @@
 					<ObjectIdentifier
 						title="{Name}"
 						text="{name}"/>
-					<Checkbox
+					<CheckBox
 						selected="{isTraveling}" />
-					<Checkbox
+					<CheckBox
 						selected="{isDriving}" />
 				</cells>
 			</ColumnListItem>
