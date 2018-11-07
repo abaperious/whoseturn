@@ -19,7 +19,7 @@ sap.ui.define([
             
             
             this.getView().setModel(new JSONModel({
-            	Products: [
+            	Users: [
             		{ name: "Łukasz", isTraveling: false, isDriving: false },
             		{ name: "Szymon", isTraveling: false, isDriving: false },
             		{ name: "Maciej", isTraveling: false, isDriving: false },

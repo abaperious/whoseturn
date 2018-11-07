@@ -12,14 +12,14 @@
 				updateFinished="onUpdateFinished"
 				width="auto"
 				items="{
-					path: '/Products',
-					sorter: {
-						path: 'ProductName',
-						descending: false
-					},
-					parameters: {
-						'expand': 'Supplier'
-					}
+					path: 'frontEnd>/Users'
+<!-- 					sorter: { -->
+<!-- 						path: 'ProductName', -->
+<!-- 						descending: false -->
+<!-- 					}, -->
+<!-- 					parameters: { -->
+<!-- 						'expand': 'Supplier' -->
+<!-- 					} -->
 				}">
 				<headerToolbar>
 					<Toolbar>
