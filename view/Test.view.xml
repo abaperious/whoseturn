@@ -55,17 +55,6 @@
 							minScreenWidth="Tablet">
 							<Text text="{i18n>TablePriceColumnTitle}"/>
 						</Column>
-						<Column id="unitsOnOrderColumn"
-							demandPopin="true"
-							minScreenWidth="Tablet"
-							hAlign="End">
-							<Text text="{i18n>TableUnitsOrderedColumnTitle}"/>
-						</Column>
-						<Column
-							id="unitsInStockColumn"
-							hAlign="End">
-							<Text text="{i18n>TableUnitsInStockColumnTitle}"/>
-						</Column>
 				</columns>
 
 				<items>
@@ -73,27 +62,9 @@
 						type="Navigation"
 						press="onPress">
 						<cells>
-							<ObjectIdentifier
-								title="{ProductName}"/>
-							<Text text = "{Supplier/CompanyName}"/>
-							<ObjectNumber
-								unit="EUR"
-								number="{
-									path: 'UnitPrice',
-									formatter: '.formatter.numberUnit'}"/>
-							<ObjectNumber
-								number="{
-									path: 'UnitsOnOrder',
-									formatter: '.formatter.numberUnit'}"
-									unit="PC"/>
-							<ObjectNumber
-								number="{
-									path: 'UnitsInStock',
-									formatter: '.formatter.numberUnit'}"
-								unit="PC"
-								state="{
-									path: 'UnitsInStock',
-									formatter: '.formatter.quantityState'}"/>
+							<Text text = "{frontEnd>/name}"/>
+							<Checkbox value="{frontEnd>isTraveling}"></Checkbox>
+							<Checkbox value="{frontEnd>isDriving}"></Checkbox>
 						</cells>
 					</ColumnListItem>
 				</items>
