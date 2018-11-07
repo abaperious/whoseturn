@@ -49,16 +49,16 @@
 						</Column>
 				</columns>
 
-				<items>
-					<ColumnListItem
-						type="Navigation"
-						press="onPress">
-						<cells>
-							<Text text = "{frontEnd>/name}"/>
-							<CheckBox selected="{frontEnd>isTraveling}"></CheckBox>
-							<CheckBox selected="{frontEnd>isDriving}"></CheckBox>
-						</cells>
-					</ColumnListItem>
-				</items>
+<!-- 				<items> -->
+<!-- 					<ColumnListItem -->
+<!-- 						type="Navigation" -->
+<!-- 						press="onPress"> -->
+<!-- 						<cells> -->
+<!-- 							<Text text = "{frontEnd>/name}"/> -->
+<!-- 							<CheckBox selected="{frontEnd>isTraveling}"></CheckBox> -->
+<!-- 							<CheckBox selected="{frontEnd>isDriving}"></CheckBox> -->
+<!-- 						</cells> -->
+<!-- 					</ColumnListItem> -->
+<!-- 				</items> -->
 			</Table>
 </mvc:View>
