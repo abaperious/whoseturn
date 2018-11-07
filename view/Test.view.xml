@@ -13,18 +13,7 @@
 				<cells>
 					<ObjectIdentifier
 						title="{Name}"
-						text="test1"/>
-					<CheckBox
-						selected="{isTraveling}" />
-					<CheckBox
-						selected="{isDriving}" />
-				</cells>
-			</ColumnListItem>
-			<ColumnListItem>
-				<cells>
-					<ObjectIdentifier
-						title="{Name}"
-						text="test1"/>
+						text="{frontEnd>name}"/>
 					<CheckBox
 						selected="{isTraveling}" />
 					<CheckBox
