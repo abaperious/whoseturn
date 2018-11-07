@@ -28,7 +28,7 @@
 					text : "Go to Page 2",
 					press : function () {
 						// navigate to page2
-						shell.app.to("page2");
+						shell.getApp().to("page2");
 					}
 				})
 			});
@@ -39,12 +39,12 @@
 				showNavButton : true,
 				navButtonPress : function () {
 					// go back to the previous page
-					shell.app.back();
+					shell.getApp().back();
 				},
 				content : new sap.m.Button({
 					text: "go to test page",
 					press: function(){
-						shell.app.to("pageTest");
+						shell.getApp().to("pageTest");
 					}
 				})
 			});
@@ -56,7 +56,7 @@
 				showNavButton : true,
 				navButtonPress : function () {
 					// go back to the previous page
-					shell.app.back();
+					shell.getApp().back();
 				},
 				content: 
 					new sap.ui.xmlview({
@@ -65,7 +65,7 @@
 				
 			});
 			// add both pages to the app
-			shell.app.addPage(page1).addPage(page2).addPage(page3);
+			shell.getApp().addPage(page1).addPage(page2).addPage(page3);
 		});
 	</script>
 </head>
