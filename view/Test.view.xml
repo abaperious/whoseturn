@@ -8,7 +8,7 @@
    		<Table id="idProductsTable"
 		inset="false"
 		items="{
-			path: 'Users',
+			path: '/Users',
 			sorter: {
 				path: 'name'
 			}
