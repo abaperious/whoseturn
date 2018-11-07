@@ -63,8 +63,8 @@
 						press="onPress">
 						<cells>
 							<Text text = "{frontEnd>/name}"/>
-							<CheckBox value="{frontEnd>isTraveling}"></CheckBox>
-							<CheckBox value="{frontEnd>isDriving}"></CheckBox>
+							<CheckBox selected="{frontEnd>isTraveling}"></CheckBox>
+							<CheckBox selected="{frontEnd>isDriving}"></CheckBox>
 						</cells>
 					</ColumnListItem>
 				</items>
