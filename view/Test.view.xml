@@ -7,12 +7,7 @@
    <Text text="Hello World"/>
    		<Table id="idProductsTable"
 		inset="false"
-		items="{
-			path: '/Users',
-			sorter: {
-				path: 'name'
-			}
-		}">
+		items="{'/Users/'}>
 		<headerToolbar>
 			<Toolbar>
 				<content>
