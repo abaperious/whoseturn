@@ -39,8 +39,7 @@
 				content : new sap.m.Button({
 					text: "go to test page",
 					press: function(){
-						var oRouter = sap.ui.core.UIComponent.getRouterFor(that);
-						  oRouter.navTo("second");
+						app.to("pageTest");
 					}
 				})
 			});
