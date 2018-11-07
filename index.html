@@ -7,7 +7,10 @@
 	<script src="https://openui5.hana.ondemand.com/resources/sap-ui-core.js"
 		id="sap-ui-bootstrap"
 		data-sap-ui-theme="sap_belize"
-		data-sap-ui-libs="sap.m">
+		data-sap-ui-libs="sap.m"
+		data-sap-ui-resourceroots='{
+            "sap.ui.demo.whoseturn": "./"
+         }'>
 	</script>
 	<script type="text/javascript">
 		sap.ui.getCore().attachInit(function () {
@@ -48,9 +51,15 @@
 			app.placeAt("content");
 			var page3 = new sap.m.Page("pageTest", {
 				title: "test page",
+				showNavButton : true,
 				navButtonPress : function () {
 					// go back to the previous page
 					app.back();
+				},
+				content: {
+					sap.ui.xmlview({
+			               viewName : "sap.ui.demo.whoseturn.view.Test"
+			            })
 				}
 			});
 			// add both pages to the app
