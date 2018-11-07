@@ -7,7 +7,7 @@
    <Text text="Hello World"/>
    		<Table id="idProductsTable"
 		inset="false"
-		items="{'/Users/'}>
+		items="{Users/}>
 		<headerToolbar>
 			<Toolbar>
 				<content>
