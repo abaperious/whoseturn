@@ -14,9 +14,11 @@
 	</script>
 	<script type="text/javascript">
 		sap.ui.getCore().attachInit(function () {
+			var shell = new sap.m.Shell({
 			// create a mobile app and display page1 initially
-			var app = new sap.m.App("myApp", {
+			app : new sap.m.App("myApp", {
 				initialPage: "page1"
+			})
 			});
 			// create the first page
 			var page1 = new sap.m.Page("page1", {
@@ -26,7 +28,7 @@
 					text : "Go to Page 2",
 					press : function () {
 						// navigate to page2
-						app.to("page2");
+						shell.app.to("page2");
 					}
 				})
 			});
@@ -37,24 +39,24 @@
 				showNavButton : true,
 				navButtonPress : function () {
 					// go back to the previous page
-					app.back();
+					shell.app.back();
 				},
 				content : new sap.m.Button({
 					text: "go to test page",
 					press: function(){
-						app.to("pageTest");
+						shell.app.to("pageTest");
 					}
 				})
 			});
 			
 			// place the app into the HTML document
-			app.placeAt("content");
+
 			var page3 = new sap.m.Page("pageTest", {
 				title: "test page",
 				showNavButton : true,
 				navButtonPress : function () {
 					// go back to the previous page
-					app.back();
+					shell.app.back();
 				},
 				content: 
 					new sap.ui.xmlview({
@@ -63,7 +65,7 @@
 				
 			});
 			// add both pages to the app
-			app.addPage(page1).addPage(page2).addPage(page3);
+			shell.app.addPage(page1).addPage(page2).addPage(page3);
 		});
 	</script>
 </head>
