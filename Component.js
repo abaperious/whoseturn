@@ -28,9 +28,15 @@ sap.ui.define([
 				// set the device model
 				this.setModel(models.createDeviceModel(), "device");
 
-				var jsonContent = new sap.ui.model.json.JSONModel("../localService/mockdata/Objects.json");
+				var jsonTemplate = new JSONModel(jQuery.sap.getModulePath("../localService/mockdata", "/Objects.json"));
+				jsonTemplate.attachRequestCompleted(function(oEvent){  
+				var ModelNEW= oEvent.getSource();  
+				console.log(JSON.stringify(ModelNEW.getData()));  
+				})
+
+				//var jsonContent = new sap.ui.model.json.JSONModel();
 				
-				this.setModel(jsonContent );
+				this.setModel(jsonTemplate );
 
 // initialize the error handler with the component
 this._oErrorHandler = new ErrorHandler(this);
