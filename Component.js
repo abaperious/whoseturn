@@ -28,7 +28,7 @@ sap.ui.define([
 				// set the device model
 				this.setModel(models.createDeviceModel(), "device");
 
-				var jsonTemplate = new JSONModel(jQuery.sap.getModulePath("../localService/mockdata", "/Objects.json"));
+				var jsonTemplate = new sap.ui.model.json.JSONModel(jQuery.sap.getModulePath("../localService/mockdata", "/Objects.json"));
 				jsonTemplate.attachRequestCompleted(function(oEvent){  
 				var ModelNEW= oEvent.getSource();  
 				console.log(JSON.stringify(ModelNEW.getData()));  
