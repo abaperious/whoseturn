@@ -29,6 +29,10 @@ sap.ui.define([
 				// set the device model
 				this.setModel(models.createDeviceModel(), "device");
 
+				var jsonContent = new sap.ui.model.json.JSONModel("localService/mockdata/Objects.json");
+				
+				this.setModel(jsonContent );
+
 				// create the views based on the url/hash
 				this.getRouter().initialize();
 			},
