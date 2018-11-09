@@ -23,8 +23,7 @@ sap.ui.define([
 				// call the base component's init function
 				UIComponent.prototype.init.apply(this, arguments);
 
-				// initialize the error handler with the component
-				this._oErrorHandler = new ErrorHandler(this);
+				
 
 				// set the device model
 				this.setModel(models.createDeviceModel(), "device");
@@ -32,6 +31,9 @@ sap.ui.define([
 				var jsonContent = new sap.ui.model.json.JSONModel("localService/mockdata/Objects.json");
 				
 				this.setModel(jsonContent );
+
+// initialize the error handler with the component
+this._oErrorHandler = new ErrorHandler(this);
 
 				// create the views based on the url/hash
 				this.getRouter().initialize();
