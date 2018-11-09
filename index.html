@@ -1,75 +1,45 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta charset="utf-8">
-	<title>Hello World App</title>
-	<script src="https://openui5.hana.ondemand.com/resources/sap-ui-core.js"
-		id="sap-ui-bootstrap"
-		data-sap-ui-theme="sap_belize"
-		data-sap-ui-libs="sap.m"
-		data-sap-ui-resourceroots='{
-            "sap.ui.demo.whoseturn": "./"
-         }'>
-	</script>
-	<script type="text/javascript">
-		sap.ui.getCore().attachInit(function () {
-			var shell = new sap.m.Shell({
-			// create a mobile app and display page1 initially
-			app : new sap.m.App("myApp", {
-				initialPage: "page1"
-			})
-			}).placeAt("content");;
-			// create the first page
-			var page1 = new sap.m.Page("page1", {
-				title : "Hello World",
-				showNavButton : false,
-				content : new sap.m.Button({
-					text : "Go to Page 2",
-					press : function () {
-						// navigate to page2
-						shell.getApp().to("page2");
-					}
-				})
-			});
-			// create the second page with a back button
-			var that = this;
-			var page2 = new sap.m.Page("page2", {
-				title : "Hello Page 2",
-				showNavButton : true,
-				navButtonPress : function () {
-					// go back to the previous page
-					shell.getApp().back();
-				},
-				content : new sap.m.Button({
-					text: "go to test page",
-					press: function(){
-						shell.getApp().to("pageTest");
-					}
-				})
-			});
-			
-			// place the app into the HTML document
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Worklist</title>
 
-			var page3 = new sap.m.Page("pageTest", {
-				title: "test page",
-				showNavButton : true,
-				navButtonPress : function () {
-					// go back to the previous page
-					shell.getApp().back();
-				},
-				content: 
-					new sap.ui.xmlview({
-			               viewName : "sap.ui.demo.whoseturn.view.Test"
-			            })
-				
+	<!-- Bootstrapping UI5 -->
+	<script id="sap-ui-bootstrap"
+			src="resources/sap-ui-core.js"
+			data-sap-ui-libs="sap.m, sap.f"
+			data-sap-ui-theme="sap_belize"
+			data-sap-ui-compatVersion="edge"
+			data-sap-ui-preload="async"
+			data-sap-ui-resourceroots='{"sap.ui.demo.worklist": "."}'
+			data-sap-ui-frameOptions="trusted">
+	</script>
+
+	<script>
+		sap.ui.getCore().attachInit(function () {
+			sap.ui.require([
+				"sap/m/Shell",
+				"sap/ui/core/ComponentContainer"
+			], function (Shell, ComponentContainer) {
+				// initialize the UI component
+				new Shell({
+					app: new ComponentContainer({
+						height: "100%",
+						name: "sap.ui.demo.worklist",
+						settings: {
+							id: "worklist"
+						}
+					})
+				}).placeAt("content");
 			});
-			
-			// add both pages to the app
-			shell.getApp().addPage(page1).addPage(page2).addPage(page3);
 		});
 	</script>
+
 </head>
+
+<!-- UI Content -->
 <body class="sapUiBody" id="content">
 </body>
 </html>
