@@ -28,7 +28,7 @@ sap.ui.define([
 				//this.getOwnerComponent().getModel().attachMetadataFailed(fnSetAppNotBusy);
 
 				// apply content density mode to root view
-				this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
+				//this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
 			}
 		});
 
