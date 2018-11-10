@@ -18,7 +18,7 @@
 				id="table"
 				width="auto"
 				items="{
-					path: '/Objects',
+					path: 'backEnd>/Objects',
 					sorter: {
 						path: 'Name',
 						descending: false

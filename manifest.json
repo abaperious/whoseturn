@@ -70,6 +70,10 @@
 				"settings": {
 					"bundleName": "sap.ui.demo.worklist.i18n.i18n"
 				}
+			},
+			"": {
+				"dataSource": "",
+				"preload": true
 			}
 		},
 		"routing": {
