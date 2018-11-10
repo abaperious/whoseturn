@@ -18,7 +18,7 @@
 				id="table"
 				width="auto"
 				items="{
-					path: 'backEnd>/Objects',
+					path: 'backEnd2>/',
 					sorter: {
 						path: 'Name',
 						descending: false
@@ -58,7 +58,7 @@
 						press="onPress">
 						<cells>
 							<ObjectIdentifier
-								title="{Name}"/>
+								title="{backEnd2>Name}"/>
 							<ObjectNumber
 								number="{
 									path: 'UnitNumber',

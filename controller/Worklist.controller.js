@@ -50,6 +50,10 @@ sap.ui.define([
 					// Restore original busy indicator delay for worklist's table
 					oViewModel.setProperty("/tableBusyDelay", iOriginalBusyDelay);
 				});
+				var oModel = new sap.ui.model.json.JSONModel();
+				oModel.loadData("../localService/mockdata/Objects.json", '', false);
+				
+				 this.setModel(oModel, 'backEnd2' );
 			},
 
 			/* =========================================================== */
