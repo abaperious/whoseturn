@@ -20,10 +20,12 @@
 	<script>
 		sap.ui.getCore().attachInit(function () {
 			sap.ui.require([
+			"sap/ui/demo/worklist/localService/mockserver",
 				"sap/m/Shell",
 				"sap/ui/core/ComponentContainer"
 			], function (Shell, ComponentContainer) {
 				// initialize the UI component
+				server.init();
 				new Shell({
 					app: new ComponentContainer({
 						height: "100%",
