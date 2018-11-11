@@ -1,0 +1,70 @@
+<mvc:View
+	controllerName="sap.ui.demo.worklist.controller.TodaysQueue"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:semantic="sap.f.semantic">
+
+	<semantic:SemanticPage
+		id="page"
+		headerPinnable="false"
+		toggleHeaderOnTitleClick="false">
+
+		<semantic:titleHeading>
+			<Title text="{i18n>whoseTurnTitle}" />
+		</semantic:titleHeading>
+		<semantic:headerContent>
+			<Text text="{
+				path: 'backEnd>/currentDate',
+				type: 'sap.ui.model.type.Date',
+				formatOptions: {
+					style: 'short'
+				}
+			}" />
+		</semantic:headerContent>
+		<semantic:content>
+			
+			<Table
+				id="table"
+				width="auto"
+				items="{
+					path: 'backEnd>/peopleList/',
+					sorter: {
+						path: 'Name',
+						descending: false
+					}
+				}"
+				noDataText="{worklistView>/tableNoDataText}"
+				busyIndicatorDelay="{worklistView>/tableBusyDelay}"
+				growing="true"
+				growingScrollToLoad="true"
+				updateFinished="onUpdateFinished">
+
+				<columns>
+					<Column id="nameColumn">
+						<Text text="{i18n>name}" id="nameColumnTitle"/>
+					</Column>
+					<Column id="isTraveling" >
+						<Text text="{i18n>isTraveling}" id="isTravelingColumnTitle"/>
+					</Column>
+                    <Column id="isDriving" >
+						<Text text="{i18n>isDriving}" id="isDrivingColumnTitle"/>
+					</Column>
+				</columns>
+
+				<items>
+					<ColumnListItem
+						press="onPress">
+						<cells>
+							<ObjectIdentifier
+								title="{backEnd>name}"/>
+							<CheckBox  selected="{backEnd>isTraveling}" />
+                            <CheckBox  selected="{backEnd>isDriving}" />
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+		</semantic:content>
+
+	</semantic:SemanticPage>
+
+</mvc:View>

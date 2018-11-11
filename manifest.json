@@ -70,10 +70,6 @@
 				"settings": {
 					"bundleName": "sap.ui.demo.worklist.i18n.i18n"
 				}
-			},
-			"": {
-				"dataSource": "mainService",
-				"preload": true
 			}
 		},
 		"routing": {
@@ -92,6 +88,11 @@
 			"routes": [
 				{
 					"pattern": "",
+					"name": "todaysQueue",
+					"target": ["todaysQueue"]
+				},
+				{
+					"pattern": "worklist",
 					"name": "worklist",
 					"target": ["worklist"]
 				},
@@ -100,6 +101,7 @@
 					"name": "object",
 					"target": ["object"]
 				}
+				
 			],
 
 			"targets": {
@@ -114,6 +116,12 @@
 					"viewId": "object",
 					"viewLevel": 2,
 					"title": "{i18n>objectViewTitle}"
+				},
+				"todaysQueue": {
+					"viewName": "TodaysQueue",
+					"viewId": "todaysQueue",
+					"viewLevel": 1,
+					"title": "{i18n>todaysQueueViewTitle}"
 				},
 				"objectNotFound": {
 					"viewName": "ObjectNotFound",
