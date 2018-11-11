@@ -51,7 +51,7 @@ sap.ui.define([
                 oViewModel.setProperty("/tableBusyDelay", iOriginalBusyDelay);
             });
             var oModel = new sap.ui.model.json.JSONModel();
-            oModel.loadData("../localService/mockdata/Queue1People.json", '', false);
+            oModel.loadData("localService/mockdata/Queue1People.json", '', false);
             var oDate = new Date(); 
             oModel.setProperty("/currentDate", oDate);
             this.setModel(oModel, 'backEnd' );
