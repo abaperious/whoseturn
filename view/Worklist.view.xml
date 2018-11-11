@@ -61,10 +61,10 @@
 								title="{backEnd2>Name}"/>
 							<ObjectNumber
 								number="{
-									path: 'UnitNumber',
+									path: 'backEnd2>UnitNumber',
 									formatter: '.formatter.numberUnit'
 								}"
-								unit="{UnitOfMeasure}"/>
+								unit="{backEnd2>UnitOfMeasure}"/>
 						</cells>
 					</ColumnListItem>
 				</items>

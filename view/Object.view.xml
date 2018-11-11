@@ -2,14 +2,17 @@
 	controllerName="sap.ui.demo.worklist.controller.Object"
 	xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc"
-	xmlns:semantic="sap.f.semantic">
-
+	xmlns:semantic="sap.f.semantic"
+	>
+<Page showNavButton="true"
+		navButtonPress="onNavBack">
 	<semantic:SemanticPage
 		id="page"
 		headerPinnable="false"
 		toggleHeaderOnTitleClick="false"
 		busy="{objectView>/busy}"
-		busyIndicatorDelay="{objectView>/delay}">
+		busyIndicatorDelay="{objectView>/delay}"
+		>
 
 		<semantic:titleHeading>
 			<Title text="{Name}" />
@@ -31,5 +34,5 @@
 
 
 	</semantic:SemanticPage>
-
+</Page>
 </mvc:View>
