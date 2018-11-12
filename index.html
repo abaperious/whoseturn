@@ -40,55 +40,7 @@
 <script src="https://www.gstatic.com/firebasejs/5.5.5/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/5.5.5/firebase-firestore.js"></script>
 <script>
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyDgVzdV4FGtl0q4x3Q9MkEePLOEZ7PwSMo",
-    authDomain: "whoseturn-98db0.firebaseapp.com",
-    // databaseURL: "https://whoseturn-98db0.firebaseio.com",
-    projectId: "whoseturn-98db0",
-    // storageBucket: "whoseturn-98db0.appspot.com",
-    // messagingSenderId: "481539734049"
-  };
-  firebase.initializeApp(config);
-
-
-
-
-
-  // Initialize Cloud Firestore through Firebase
-var db = firebase.firestore();
-
-// Disable deprecated features
-db.settings({
-  timestampsInSnapshots: true
-});
-
-  //var users = firebase.database().ref('/users/' );
-//   users.on('value', function(snapshot) {
-// 	console.console.log('here');	
-// 	});
-
-db.collection("users").get().then((querySnapshot) => {
-    querySnapshot.forEach((doc) => {
-        console.log(`${doc.id} => ${doc.data()}`);
-    });
-});
-
-db.collection("users").get().then(function(doc) {
-   for (let index = 0; index < doc.docs.length; index++) {
-	   var element = doc.docs[index];
-	   console.log(element.data().name);
-   }
-}).catch(function(error) {
-    console.log("Error getting document:", error);
-});
-
-// firebase.database().ref().once('value').then(function(snapshot) {
-//   var username = (snapshot.val() && snapshot.val().name) || 'Anonymous';
-//   // ...
-// });
-
-
+  
 </script>
 </head>
 

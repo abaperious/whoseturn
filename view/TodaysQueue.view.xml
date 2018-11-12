@@ -27,7 +27,7 @@
 				id="table"
 				width="auto"
 				items="{
-					path: 'backEnd>/peopleList/',
+					path: 'backEnd>/users/',
 					sorter: {
 						path: 'Name',
 						descending: false
