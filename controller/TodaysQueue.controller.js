@@ -67,16 +67,18 @@ sap.ui.define([
             db.collection("users").get().then(function (doc) {
                 for (let index = 0; index < doc.docs.length; index++) {
                     var element = doc.docs[index];
-                    var user = { name : element.data().name };
+                    var user = { 
+                        name: element.data().name,
+                        id:   element.data().id };
                     users.push(user);
                     console.log(element.data().name);
-                    
+
                 }
                 that.getModel('backEnd').setProperty("/users", users);
             }).catch(function (error) {
                 console.log("Error getting document:", error);
             });
-            
+
         },
         initializeFireStore: function () {
             // Initialize Firebase
@@ -204,8 +206,28 @@ sap.ui.define([
             });
         },
 
-        onSubmitPress: function(oEvent) {
-            var users = this.getView().getModel("backEnd").getParameter("users");
+        onSubmitPress: function (oEvent) {
+            var users = this.getView().getModel("backEnd").getData().users;
+            
+            var trip = { 
+                date: new Date().toJSON(),
+                travelers : [] 
+            };
+            
+            for (let index = 0; index < users.length; index++) {
+                if (users[index].isTraveling == true) {
+                    var user  = {
+                        "id": users[index].id
+                    }
+                    trip.travelers.push(user);
+                    console.log(trip);
+                }
+               
+            }
+
+            db.collection("trips").add(trip).then(function() {
+                console.log("Document successfully written!");
+            });
         }
 
     });
