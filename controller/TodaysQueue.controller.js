@@ -204,19 +204,8 @@ sap.ui.define([
             });
         },
 
-        /**
-         * Internal helper method to apply both filter and search state together on the list binding
-         * @param {sap.ui.model.Filter[]} aTableSearchState An array of filters for the search
-         * @private
-         */
-        _applySearch: function (aTableSearchState) {
-            var oTable = this.byId("table"),
-                oViewModel = this.getModel("worklistView");
-            oTable.getBinding("items").filter(aTableSearchState, "Application");
-            // changes the noDataText of the list in case there are no filter results
-            if (aTableSearchState.length !== 0) {
-                oViewModel.setProperty("/tableNoDataText", this.getResourceBundle().getText("worklistNoDataWithSearchText"));
-            }
+        onSubmitPress: function(oEvent) {
+            var users = this.getView().getModel("backEnd").getParameter("users");
         }
 
     });

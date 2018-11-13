@@ -64,7 +64,9 @@
 				</items>
 			</Table>
 		</semantic:content>
-
+<semantic:content>
+			<Button text="Submit" onPress="onSubmitPress">
+		</semantic:content>
 	</semantic:SemanticPage>
 
 </mvc:View>
