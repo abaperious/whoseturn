@@ -217,7 +217,8 @@ sap.ui.define([
             for (let index = 0; index < users.length; index++) {
                 if (users[index].isTraveling == true) {
                     var user  = {
-                        "id": users[index].id
+                        "id": users[index].id,
+                        "isDriving": ( users[index].isDriving == undefined ) ? false : true 
                     }
                     trip.travelers.push(user);
                     console.log(trip);
