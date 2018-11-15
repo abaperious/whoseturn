@@ -67,9 +67,10 @@ sap.ui.define([
             db.collection("users").get().then(function (doc) {
                 for (let index = 0; index < doc.docs.length; index++) {
                     var element = doc.docs[index];
-                    var user = { 
+                    var user = {
                         name: element.data().name,
-                        id:   element.data().id };
+                        id: element.data().id
+                    };
                     users.push(user);
                     console.log(element.data().name);
 
@@ -208,27 +209,53 @@ sap.ui.define([
 
         onSubmitPress: function (oEvent) {
             var users = this.getView().getModel("backEnd").getData().users;
-            
-            var trip = { 
+
+            var trip = {
                 date: new Date().toJSON(),
-                travelers : [] 
+                travelers: []
             };
-            
+
             for (let index = 0; index < users.length; index++) {
                 if (users[index].isTraveling == true) {
-                    var user  = {
+                    var user = {
                         "id": users[index].id,
-                        "isDriving": ( users[index].isDriving == undefined ) ? false : true 
+                        "isDriving": (users[index].isDriving == undefined) ? false : true,
+                        "oneWay": false,
+                        "lastState": ""
                     }
                     trip.travelers.push(user);
                     console.log(trip);
                 }
-               
+
             }
 
-            db.collection("trips").add(trip).then(function() {
+            db.collection("trips").add(trip).then(function () {
                 console.log("Document successfully written!");
             });
+        },
+
+        onTravelingClick: function (oEvent) {
+            var user = oEvent.getSource().getBindingContext("backEnd");
+            if (user.getProperty("isTraveling")==false) {
+                if (user.getProperty("lastState")=="selected") {
+                    oEvent.getSource().setProperty("partiallySelected",true);
+                    oEvent.getSource().setProperty("selected",true);
+                    this.getView().getModel("backEnd").setProperty(user.sPath+"/lastState", "partiallySelected");
+                    oEvent.getSource().setText("One Way")
+                }
+            } else {
+                oEvent.getSource().setText("");
+                if (user.getProperty("lastState")=="partiallySelected") {
+                    this.getView().getModel("backEnd").setProperty(user.sPath+"/lastState", "");
+                    oEvent.getSource().setProperty("selected",false);
+                } else {
+                    this.getView().getModel("backEnd").setProperty(user.sPath+"/lastState", "selected");
+                }
+                
+            }
+             
+            
+
         }
 
     });

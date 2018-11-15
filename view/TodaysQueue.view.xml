@@ -48,7 +48,11 @@
 						<cells>
 							<ObjectIdentifier
 								title="{backEnd>name}"/>
-							<CheckBox  selected="{backEnd>isTraveling}" />
+							<CheckBox  
+								selected="{backEnd>isTraveling}" 
+								partiallySelected="{backEnd>oneWay}"
+								select="onTravelingClick"
+							/>
                             <CheckBox  selected="{backEnd>isDriving}" />
 						</cells>
 					</ColumnListItem>
