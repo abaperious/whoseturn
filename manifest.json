@@ -97,6 +97,16 @@
 					"target": ["worklist"]
 				},
 				{
+					"pattern": "ranking",
+					"name": "ranking",
+					"target": ["ranking"]
+				},
+				{
+					"pattern": "calendar",
+					"name": "calendar",
+					"target": ["calendar"]
+				},
+				{
 					"pattern": "Objects/{objectId}",
 					"name": "object",
 					"target": ["object"]
@@ -122,6 +132,18 @@
 					"viewId": "todaysQueue",
 					"viewLevel": 1,
 					"title": "{i18n>todaysQueueViewTitle}"
+				},
+				"ranking": {
+					"viewName": "Ranking",
+					"viewId": "ranking",
+					"viewLevel": 1,
+					"title": "{i18n>rankingViewTitle}"
+				},
+				"calendar": {
+					"viewName": "Calendar",
+					"viewId": "calendar",
+					"viewLevel": 1,
+					"title": "{i18n>calendarViewTitle}"
 				},
 				"objectNotFound": {
 					"viewName": "ObjectNotFound",

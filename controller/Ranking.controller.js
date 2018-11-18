@@ -29,7 +29,7 @@ sap.ui.define([
             // Put down worklist table's original value for busy indicator delay,
             // so it can be restored later on. Busy handling on the table is
             // taken care of by the table itself.
-            iOriginalBusyDelay = oTable.getBusyIndicatorDelay();
+            // iOriginalBusyDelay = oTable.getBusyIndicatorDelay();
             // keeps the search state
             this._aTableSearchState = [];
 
@@ -44,13 +44,7 @@ sap.ui.define([
             });
             this.setModel(oViewModel, "worklistView");
 
-            // Make sure, busy indication is showing immediately so there is no
-            // break after the busy indication for loading the view's meta data is
-            // ended (see promise 'oWhenMetadataIsLoaded' in AppController)
-            oTable.attachEventOnce("updateFinished", function () {
-                // Restore original busy indicator delay for worklist's table
-                oViewModel.setProperty("/tableBusyDelay", iOriginalBusyDelay);
-            });
+
             this.initializeFireStore();
             var oModel = new sap.ui.model.json.JSONModel();
             oModel.loadData("localService/mockdata/Queue1People.json", '', false);
@@ -62,24 +56,24 @@ sap.ui.define([
 
             var oMenuModel = new sap.ui.model.json.JSONModel();
             var menuData = { navigation: [{
-                title: 'Todays queue',
-                icon: 'sap-icon://employee',
-                expanded: true,
-                key: 'todaysQueue'
-            },
-            {
-                title: 'Ranking',
-                icon: 'sap-icon://sorting-ranking',
-                expanded: true,
-                key: 'ranking'
-            },
-            {
-                title: 'Calendar',
-                icon: 'sap-icon://appointment-2',
-                expanded: true,
-                key: 'calendar'
-            }
-        ]};
+                    title: 'Todays queue',
+                    icon: 'sap-icon://employee',
+                    expanded: true,
+                    key: 'todaysQueue'
+                },
+                {
+                    title: 'Ranking',
+                    icon: 'sap-icon://sorting-ranking',
+                    expanded: true,
+                    key: 'ranking'
+                },
+                {
+                    title: 'Calendar',
+                    icon: 'sap-icon://appointment-2',
+                    expanded: true,
+                    key: 'calendar'
+                }
+            ]};
             oMenuModel.setData(menuData);
             this.setModel(oMenuModel, 'menu');
             this.getUsers();
@@ -127,12 +121,12 @@ sap.ui.define([
         },
         initializeFireStore: function () {
             // Initialize Firebase
-            var config = {
-                apiKey: "AIzaSyDgVzdV4FGtl0q4x3Q9MkEePLOEZ7PwSMo",
-                authDomain: "whoseturn-98db0.firebaseapp.com",
-                projectId: "whoseturn-98db0",
-            };
-            firebase.initializeApp(config);
+            // var config = {
+            //     apiKey: "AIzaSyDgVzdV4FGtl0q4x3Q9MkEePLOEZ7PwSMo",
+            //     authDomain: "whoseturn-98db0.firebaseapp.com",
+            //     projectId: "whoseturn-98db0",
+            // };
+            // firebase.initializeApp(config);
             // Initialize Cloud Firestore through Firebase
             db = firebase.firestore();
 
@@ -309,7 +303,7 @@ sap.ui.define([
         },
         onItemSelect : function (oItem) {
             this.getRouter().navTo(oItem.getParameter('item').getKey());
-        },
+        }
 
     });
 }

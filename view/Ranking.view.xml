@@ -1,6 +1,6 @@
 <mvc:View
  height="100%"
-	controllerName="sap.ui.demo.worklist.controller.TodaysQueue"
+	controllerName="sap.ui.demo.worklist.controller.Ranking"
 	xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:semantic="sap.f.semantic"
@@ -8,7 +8,7 @@
 	displayBlock="true">
 
 
-	<tnt:ToolPage id="toolPage">
+	<tnt:ToolPage id="toolPage2">
 		<tnt:header>
 			<tnt:ToolHeader>
 				<Button id="sideNavigationToggleButton"
@@ -62,58 +62,13 @@
 					style: 'short'
 				}
 			}" />
-			<Table
-				id="table"
-				width="auto"
-				items="{
-					path: 'backEnd>/users/',
-					sorter: {
-						path: 'Name',
-						descending: false
-					}
-				}"
-				noDataText="{worklistView>/tableNoDataText}"
-				busyIndicatorDelay="{worklistView>/tableBusyDelay}"
-				growing="true"
-				growingScrollToLoad="true"
-				updateFinished="onUpdateFinished">
-
-				<columns>
-					<Column id="nameColumn">
-						<Text text="{i18n>name}" id="nameColumnTitle"/>
-					</Column>
-					<Column id="isTraveling" >
-						<Text text="{i18n>isTraveling}" id="isTravelingColumnTitle"/>
-					</Column>
-                    <Column id="isDriving" >
-						<Text text="{i18n>isDriving}" id="isDrivingColumnTitle"/>
-					</Column>
-				</columns>
-
-				<items>
-					<ColumnListItem
-						press="onPress">
-						<cells>
-							<ObjectIdentifier
-								title="{backEnd>name}"/>
-							<CheckBox  
-								selected="{backEnd>isTraveling}" 
-								partiallySelected="{backEnd>oneWay}"
-								select="onTravelingClick"
-							/>
-                            <CheckBox  selected="{backEnd>isDriving}" />
-						</cells>
-					</ColumnListItem>
-				</items>
-			</Table>
-			<Button text="Submit" press="onSubmitPress"/>
+			
 					</ScrollContainer>
 					
 					
 				</pages>
 			</NavContainer>
 			
-			<Button text="Submit" press="onSubmitPress"/>
 		</tnt:mainContents>
 	</tnt:ToolPage>
 </mvc:View>
