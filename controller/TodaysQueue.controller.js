@@ -59,6 +59,23 @@ sap.ui.define([
             oModel.setProperty("/currentDate", oDate);
             oModel.setProperty("/users", users);
             this.setModel(oModel, 'backEnd');
+
+            var oMenuModel = new sap.ui.model.json.JSONModel();
+            var menuData = { navigation: [{
+				title: 'Todays queue',
+				icon: 'sap-icon://employee',
+				expanded: true,
+				key: 'root1'
+            },
+            {
+				title: 'Ranking',
+				icon: 'sap-icon://employee',
+				expanded: true,
+				key: 'root2'
+            }
+        ]};
+            oMenuModel.setData(menuData);
+            this.setModel(oMenuModel, 'menu');
             this.getUsers();
         },
         getUsers: function () {
@@ -253,10 +270,16 @@ sap.ui.define([
                 }
                 
             }
-             
-            
+        },
+        onSideNavButtonPress : function() {
+			var viewId = this.getView().getId();
+			var toolPage = sap.ui.getCore().byId(viewId + "--toolPage");
+			var sideExpanded = toolPage.getSideExpanded();
 
-        }
+			// this._setToggleButtonTooltip(sideExpanded);
+
+			toolPage.setSideExpanded(!toolPage.getSideExpanded());
+		}
 
     });
 }
