@@ -43,8 +43,6 @@ sap.ui.define([
                 tableBusyDelay: 0
             });
             this.setModel(oViewModel, "worklistView");
-
-
             this.initializeFireStore();
             var oModel = new sap.ui.model.json.JSONModel();
             oModel.loadData("localService/mockdata/Queue1People.json", '', false);
@@ -85,10 +83,7 @@ sap.ui.define([
             db.collection("users").get().then(function (doc) {
                 for (let index = 0; index < doc.docs.length; index++) {
                     var element = doc.docs[index];
-                    var user = {
-                        name: element.data().name,
-                        id: element.data().id
-                    };
+                    var user = element.data();
                     users.push(user);
                     console.log(element.data().name);
 
@@ -102,18 +97,40 @@ sap.ui.define([
         getTrips: function () {
             var trips = [];
             var that = this;
+            
+
             db.collection("trips").get().then(function (doc) {
+                var named_users = that.getModel('backEnd').getProperty("/users");
                 for (let index = 0; index < doc.docs.length; index++) {
                     var element = doc.docs[index];
                     var trip = {
                         date: element.data().date,
                         travelers: element.data().travelers
                     };
+                    if (trip.travelers.length > 1) {
+                        for (let index = 0; index < named_users.length; index++) {
+                            var named_user = named_users[index];
+                            trip.travelers.find((o,i)=>{
+                                if (o.id.path == named_user.id.path) {
+                                    var toAdd = (o.oneWay == true) ? 0.5 : 1;
+                                    named_user.score = (named_user.score == undefined) ? 1 : named_user.score+toAdd;
+                                    if (o.isDriving == true) {
+                                        named_user.drivingScore = (named_user.drivingScore == undefined) ? 1 : named_user.drivingScore+toAdd;
+                                    }
+                                }
+                            });
+                            
+                        }
+                    }
+                    
                     trips.push(trip);
                     console.log(element.data().name);
 
                 }
+                // calculate points
+                that.getModel('backEnd').setProperty("/users", named_users);
                 that.getModel('backEnd').setProperty("/trips", trips);
+                console.log(named_users);
             }).catch(function (error) {
                 console.log("Error getting document:", error);
             });

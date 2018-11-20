@@ -11,7 +11,7 @@
 	<tnt:ToolPage id="toolPage2">
 		<tnt:header>
 			<tnt:ToolHeader>
-				<Button id="sideNavigationToggleButton"
+				<Button id="sideNavigationToggleButton2"
 						icon="sap-icon://menu2"
 						type="Transparent"
 						press="onSideNavButtonPress">
@@ -49,9 +49,9 @@
 			</tnt:SideNavigation>
 		</tnt:sideContent>
 		<tnt:mainContents>
-			<NavContainer id="pageContainer">
+			<NavContainer id="pageContainer2">
 				<pages>
-					<ScrollContainer id="root1"
+					<ScrollContainer id="root2"
 									 horizontal="false"
 									 vertical="true"
 									 height="100%">
