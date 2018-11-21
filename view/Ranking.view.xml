@@ -55,12 +55,8 @@
 									 horizontal="false"
 									 vertical="true"
 									 height="100%">
-						<Text text="Today is {
-				path: 'backEnd>/currentDate',
-				type: 'sap.ui.model.type.Date',
-				formatOptions: {
-					style: 'short'
-				}
+						<Text id="rankingText" text="{
+				path: 'backEnd>/rankingText'				
 			}" />
 			
 					</ScrollContainer>

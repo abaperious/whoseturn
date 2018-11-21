@@ -84,6 +84,7 @@ sap.ui.define([
                 for (let index = 0; index < doc.docs.length; index++) {
                     var element = doc.docs[index];
                     var user = element.data();
+                    user.vsRating = [];
                     users.push(user);
                     console.log(element.data().name);
 
@@ -113,13 +114,27 @@ sap.ui.define([
                             trip.travelers.find((o,i)=>{
                                 if (o.id.path == named_user.id.path) {
                                     var toAdd = (o.oneWay == true) ? 0.5 : 1;
-                                    named_user.score = (named_user.score == undefined) ? 1 : named_user.score+toAdd;
-                                    if (o.isDriving == true) {
+                                    named_user.travelingScore = (named_user.travelingScore == undefined) ? 1 : named_user.travelingScore+toAdd;
+                                    if (o.isDriving == true && trip.travelers.length == named_users.length) {
                                         named_user.drivingScore = (named_user.drivingScore == undefined) ? 1 : named_user.drivingScore+toAdd;
+                                    } else if (o.isDriving == true)  {
+                                        trip.travelers.find((o2,j)=>{
+                                            if (o2.id.path != named_user.id.path) {
+                                                var toAddVs = (o2.oneWay == true) ? 0.5 : 1;
+                                                var vsUserIndex = named_user.vsRating.findIndex(x=>x.name == o2.id.path );
+                                                if (vsUserIndex === -1) {
+                                                    named_user.vsRating.push({
+                                                        name: o2.id.path,
+                                                        score: toAddVs
+                                                    });
+                                                } else {
+                                                    named_user.vsRating[vsUserIndex].score+=toAddVs;
+                                                }
+                                            }
+                                        });
                                     }
                                 }
                             });
-                            
                         }
                     }
                     
@@ -130,7 +145,11 @@ sap.ui.define([
                 // calculate points
                 that.getModel('backEnd').setProperty("/users", named_users);
                 that.getModel('backEnd').setProperty("/trips", trips);
+                named_users.forEach(o => { o.id = o.id.path;
+                    
+                });
                 console.log(named_users);
+                that.getModel('backEnd').setProperty("/rankingText", JSON.stringify(named_users, null, 2));
             }).catch(function (error) {
                 console.log("Error getting document:", error);
             });
