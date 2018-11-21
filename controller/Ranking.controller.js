@@ -149,7 +149,7 @@ sap.ui.define([
                     
                 });
                 console.log(named_users);
-                that.getModel('backEnd').setProperty("/rankingText", JSON.stringify(named_users, null, 2));
+                that.getModel('backEnd').setProperty("/rankingText", JSON.stringify(named_users, null,2));
             }).catch(function (error) {
                 console.log("Error getting document:", error);
             });
