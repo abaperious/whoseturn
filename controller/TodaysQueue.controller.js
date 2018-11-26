@@ -275,8 +275,8 @@ sap.ui.define([
 
             db.collection("trips").add(trip).then(function () {
                 console.log("Document successfully written!");
-                var msg = 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy\r\n eirmod.';
-                MessageToast.show(msg);
+                var msg = 'Trip has been saved!';
+                sap.m.MessageToast.show(msg);
             });
         },
 

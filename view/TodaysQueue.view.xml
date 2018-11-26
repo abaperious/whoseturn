@@ -113,7 +113,6 @@
 				</pages>
 			</NavContainer>
 			
-			<Button text="Submit" press="onSubmitPress"/>
 		</tnt:mainContents>
 	</tnt:ToolPage>
 </mvc:View>
