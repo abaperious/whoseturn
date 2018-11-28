@@ -2,7 +2,8 @@
 	xmlns="sap.m" 
 	xmlns:mvc="sap.ui.core.mvc" 
 	xmlns:semantic="sap.f.semantic" 
-	xmlns:tnt="sap.tnt" displayBlock="true">
+	xmlns:tnt="sap.tnt" displayBlock="true"
+	xmlns:html="http://www.w3.org/1999/xhtml">
 
 
 	<tnt:ToolPage id="toolPage2">
@@ -40,10 +41,10 @@
 						<Text id="rankingText" text="{
 				path: 'backEnd>/rankingText'				
 			}" />
-
+<html:canvas id="myChart" width="800" height="650"></html:canvas>
 					</ScrollContainer>
 
-
+					
 				</pages>
 			</NavContainer>
 

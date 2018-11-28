@@ -51,7 +51,7 @@ sap.ui.define([
                 // Restore original busy indicator delay for worklist's table
                 oViewModel.setProperty("/tableBusyDelay", iOriginalBusyDelay);
             });
-            this.initializeFireStore();
+            db = this.getOwnerComponent().getDb();
             var oModel = new sap.ui.model.json.JSONModel();
             oModel.loadData("localService/mockdata/Queue1People.json", '', false);
             var oDate = new Date();
@@ -125,39 +125,7 @@ sap.ui.define([
             });
 
         },
-        initializeFireStore: function () {
-            // Initialize Firebase
-            var config = {
-                apiKey: "AIzaSyDgVzdV4FGtl0q4x3Q9MkEePLOEZ7PwSMo",
-                authDomain: "whoseturn-98db0.firebaseapp.com",
-                projectId: "whoseturn-98db0",
-            };
-            firebase.initializeApp(config);
-            // Initialize Cloud Firestore through Firebase
-            db = firebase.firestore();
-
-            // Disable deprecated features
-            db.settings({
-                timestampsInSnapshots: true
-            });
-
-
-            db.collection("users").get().then((querySnapshot) => {
-                querySnapshot.forEach((doc) => {
-                    console.log(`${doc.id} => ${doc.data()}`);
-                });
-            });
-
-            db.collection("users").get().then(function (doc) {
-                for (let index = 0; index < doc.docs.length; index++) {
-                    var element = doc.docs[index];
-                    console.log(element.data().name);
-                }
-            }).catch(function (error) {
-                console.log("Error getting document:", error);
-            });
-
-        },
+       
         /* =========================================================== */
         /* event handlers                                              */
         /* =========================================================== */
