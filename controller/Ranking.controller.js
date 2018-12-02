@@ -82,7 +82,7 @@ sap.ui.define([
             this.getUsers();
             this.getTrips();
 
-            
+
         },
         getUsers: function () {
             var users = [];
@@ -92,6 +92,7 @@ sap.ui.define([
                     var element = doc.docs[index];
                     var user = element.data();
                     user.vsRating = [];
+                    user.actualDrivingScore = 0;
                     users.push(user);
                     console.log(element.data().name);
 
@@ -142,6 +143,7 @@ sap.ui.define([
                                     }
                                 }
                             });
+                            named_user.actualDrivingScore = named_user.drivingScore;
                         }
                     }
 
@@ -156,26 +158,25 @@ sap.ui.define([
                     o.id = o.id.path;
 
                 });
-                
+
 
                 for (let index = 0; index < named_users.length; index++) {
                     var user = named_users[index];
                     user.scoreFromVS = 0;
-                    user.actualDrivingScore = user.drivingScore;
                     
-                    if(user.vsRating != undefined){
+                    if (user.vsRating != undefined) {
                         for (let j = 0; j < user.vsRating.length; j++) {
                             const vsRat = user.vsRating[j];
-                            user.scoreFromVS+=vsRat.score;
-    
-                            named_users.find((o,i)=>{
+                            user.scoreFromVS += vsRat.score;
+
+                            named_users.find((o, i) => {
                                 if (o.id == vsRat.name) {
-                                    named_users[i].actualDrivingScore-=vsRat.score;
+                                    named_users[i].actualDrivingScore -= vsRat.score;
                                 }
                             });
                         }
                     }
-                    named_users[index] = user ;
+                    named_users[index] = user;
                 }
                 for (let index = 0; index < named_users.length; index++) {
                     var user = named_users[index];
@@ -194,7 +195,7 @@ sap.ui.define([
             });
 
         },
-       
+
         /* =========================================================== */
         /* event handlers                                              */
         /* =========================================================== */
@@ -283,8 +284,8 @@ sap.ui.define([
         },
 
         showGraph: function () {
-            
-            var ctx = $( "#"+this.getView().getId()+"--myChart"+"" )[ 0 ].getContext('2d');
+
+            var ctx = $("#" + this.getView().getId() + "--myChart" + "")[0].getContext('2d');
             var myChart = new Chart(ctx, {
                 type: 'horizontalBar',
                 data: {
@@ -327,10 +328,10 @@ sap.ui.define([
                             ticks: {
                                 beginAtZero: true
                             }
-						}],
-						yAxes: [{
-							stacked: true
-						}]
+                        }],
+                        yAxes: [{
+                            stacked: true
+                        }]
                     }
                 }
             });
