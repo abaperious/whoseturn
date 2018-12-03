@@ -1,118 +1,49 @@
-<mvc:View
- height="100%"
-	controllerName="sap.ui.demo.worklist.controller.TodaysQueue"
-	xmlns="sap.m"
-	xmlns:mvc="sap.ui.core.mvc"
-	xmlns:semantic="sap.f.semantic"
-	  xmlns:tnt="sap.tnt"
-	displayBlock="true">
+<mvc:View height="100%" controllerName="sap.ui.demo.worklist.controller.TodaysQueue" 
+	xmlns="sap.m" 
+	xmlns:mvc="sap.ui.core.mvc" 
+	xmlns:semantic="sap.f.semantic" 
+	xmlns:tnt="sap.tnt" displayBlock="true">
 
-
-	<tnt:ToolPage id="toolPage">
-		<tnt:header>
-			<tnt:ToolHeader>
-				<Button id="sideNavigationToggleButton"
-						icon="sap-icon://menu2"
-						type="Transparent"
-						press="onSideNavButtonPress">
-					<layoutData>
-						<OverflowToolbarLayoutData priority="NeverOverflow" />
-					</layoutData>
-				</Button>
-				
-
-			</tnt:ToolHeader>
-		</tnt:header>
-		<tnt:sideContent>
-			<tnt:SideNavigation expanded="true"
-								itemSelect="onItemSelect">
-				<tnt:NavigationList items="{path: 'menu>/navigation'}">
-					<tnt:NavigationListItem text="{menu>title}"
-											icon="{menu>icon}"
-											enabled="{menu>enabled}"
-											expanded="{menu>expanded}"
-											items="{menu>items}"
-											key="{menu>key}">
-						<tnt:NavigationListItem text="{title}"
-												key="{key}"
-												enabled="{enabled}">
-						</tnt:NavigationListItem>
-					</tnt:NavigationListItem>
-				</tnt:NavigationList>
-				<tnt:fixedItem>
-					<tnt:NavigationList items="{path: '/fixedNavigation'}">
-						<tnt:NavigationListItem text="{title}"
-												icon="{icon}">
-						</tnt:NavigationListItem>
-					</tnt:NavigationList>
-				</tnt:fixedItem>
-			</tnt:SideNavigation>
-		</tnt:sideContent>
-		<tnt:mainContents>
-			<NavContainer id="pageContainer">
-				<pages>
-					<ScrollContainer id="root1"
-									 horizontal="false"
-									 vertical="true"
-									 height="100%">
-						<Text text="Today is {
+	<Page>
+		<ScrollContainer id="root1" horizontal="false" vertical="true" height="100%">
+			<Text text="Today is {
 				path: 'backEnd>/currentDate',
 				type: 'sap.ui.model.type.Date',
 				formatOptions: {
 					style: 'short'
 				}
 			}" />
-			<Table
-				id="table"
-				width="auto"
-				items="{
+			<Table id="table" width="auto" items="{
 					path: 'backEnd>/users/',
 					sorter: {
 						path: 'Name',
 						descending: false
 					}
-				}"
-				noDataText="{worklistView>/tableNoDataText}"
-				busyIndicatorDelay="{worklistView>/tableBusyDelay}"
-				growing="true"
-				growingScrollToLoad="true"
-				updateFinished="onUpdateFinished">
+				}" noDataText="{worklistView>/tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true" updateFinished="onUpdateFinished">
 
 				<columns>
 					<Column id="nameColumn">
 						<Text text="{i18n>name}" id="nameColumnTitle"/>
 					</Column>
-					<Column id="isTraveling" >
+					<Column id="isTraveling">
 						<Text text="{i18n>isTraveling}" id="isTravelingColumnTitle"/>
 					</Column>
-                    <Column id="isDriving" >
+					<Column id="isDriving">
 						<Text text="{i18n>isDriving}" id="isDrivingColumnTitle"/>
 					</Column>
 				</columns>
 
 				<items>
-					<ColumnListItem
-						press="onPress">
+					<ColumnListItem press="onPress">
 						<cells>
-							<ObjectIdentifier
-								title="{backEnd>name}"/>
-							<CheckBox  
-								selected="{backEnd>isTraveling}" 
-								partiallySelected="{backEnd>oneWay}"
-								select="onTravelingClick"
-							/>
-                            <CheckBox  selected="{backEnd>isDriving}" />
+							<ObjectIdentifier title="{backEnd>name}"/>
+							<CheckBox selected="{backEnd>isTraveling}" partiallySelected="{backEnd>oneWay}" select="onTravelingClick" />
+							<CheckBox selected="{backEnd>isDriving}" />
 						</cells>
 					</ColumnListItem>
 				</items>
 			</Table>
 			<Button text="Submit" press="onSubmitPress"/>
-					</ScrollContainer>
-					
-					
-				</pages>
-			</NavContainer>
-			
-		</tnt:mainContents>
-	</tnt:ToolPage>
+		</ScrollContainer>
+	</Page>
 </mvc:View>

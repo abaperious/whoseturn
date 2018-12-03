@@ -1,11 +1,45 @@
-<mvc:View
-	xmlns:mvc="sap.ui.core.mvc"
-	controllerName="sap.ui.demo.worklist.controller.App"
-	displayBlock="true"
-	xmlns="sap.m">
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="sap.ui.demo.worklist.controller.App" displayBlock="true" 
+	xmlns="sap.m" 
+	xmlns:tnt="sap.tnt">
 
-	<App id="app"
-		 busy="{appView>/busy}"
-		 busyIndicatorDelay="{appView>/delay}"/>
+
+	<tnt:ToolPage id="toolPage">
+		<tnt:header>
+			<tnt:ToolHeader>
+				<Button id="sideNavigationToggleButton" icon="sap-icon://menu2" type="Transparent" press="onSideNavButtonPress">
+					<layoutData>
+						<OverflowToolbarLayoutData priority="NeverOverflow" />
+					</layoutData>
+				</Button>
+
+
+			</tnt:ToolHeader>
+		</tnt:header>
+		<tnt:sideContent>
+			<tnt:SideNavigation expanded="true" itemSelect="onItemSelect">
+				<tnt:NavigationList items="{path: 'menu>/navigation'}">
+					<tnt:NavigationListItem text="{menu>title}" icon="{menu>icon}" enabled="{menu>enabled}" expanded="{menu>expanded}" items="{menu>items}" key="{menu>key}">
+						<tnt:NavigationListItem text="{title}" key="{key}" enabled="{enabled}">
+						</tnt:NavigationListItem>
+					</tnt:NavigationListItem>
+				</tnt:NavigationList>
+				<tnt:fixedItem>
+					<tnt:NavigationList items="{path: '/fixedNavigation'}">
+						<tnt:NavigationListItem text="{title}" icon="{icon}">
+						</tnt:NavigationListItem>
+					</tnt:NavigationList>
+				</tnt:fixedItem>
+			</tnt:SideNavigation>
+		</tnt:sideContent>
+		<tnt:mainContents>
+			<NavContainer id="pageContainer">
+				<App id="app" busy="{appView>/busy}" busyIndicatorDelay="{appView>/delay}">
+				</App>
+			</NavContainer>
+
+		</tnt:mainContents>
+	</tnt:ToolPage>
+
+
 
 </mvc:View>

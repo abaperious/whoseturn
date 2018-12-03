@@ -36,7 +36,7 @@ sap.ui.define([
             // Model used to manipulate control states
             oViewModel = new JSONModel({
                 worklistTableTitle: this.getResourceBundle().getText("worklistTableTitle"),
-                shareOnJamTitle: this.getResourceBundle().getText("worklistTitle"),
+                shareOnJamTitle: this.getResourceBundle().getText("whoseTurnTitle"),
                 shareSendEmailSubject: this.getResourceBundle().getText("shareSendEmailWorklistSubject"),
                 shareSendEmailMessage: this.getResourceBundle().getText("shareSendEmailWorklistMessage", [location.href]),
                 tableNoDataText: this.getResourceBundle().getText("tableNoDataText"),
@@ -60,28 +60,7 @@ sap.ui.define([
             oModel.setProperty("/users", users);
             this.setModel(oModel, 'backEnd');
 
-            var oMenuModel = new sap.ui.model.json.JSONModel();
-            var menuData = { navigation: [{
-                title: 'Todays queue',
-                icon: 'sap-icon://employee',
-                expanded: true,
-                key: 'todaysQueue'
-            },
-            {
-                title: 'Ranking',
-                icon: 'sap-icon://sorting-ranking',
-                expanded: true,
-                key: 'ranking'
-            },
-            {
-                title: 'Calendar',
-                icon: 'sap-icon://appointment-2',
-                expanded: true,
-                key: 'calendar'
-            }
-        ]};
-            oMenuModel.setData(menuData);
-            this.setModel(oMenuModel, 'menu');
+            
             this.getUsers();
             this.getTrips();
         },
@@ -231,8 +210,8 @@ sap.ui.define([
                 if (users[index].isTraveling == true) {
                     var user = {
                         "id": users[index].id,
-                        "isDriving": (users[index].isDriving == undefined) ? false : true,
-                        "oneWay": false,
+                        "isDriving": (users[index].isDriving == undefined) ? false : users[index].isDriving,
+                        "oneWay": (users[index].oneWay == undefined) ? false : users[index].oneWay,
                         "lastState": ""
                     }
                     trip.travelers.push(user);
@@ -267,19 +246,8 @@ sap.ui.define([
                 }
                 
             }
-        },
-        onSideNavButtonPress : function() {
-			var viewId = this.getView().getId();
-			var toolPage = sap.ui.getCore().byId(viewId + "--toolPage");
-			var sideExpanded = toolPage.getSideExpanded();
-
-			// this._setToggleButtonTooltip(sideExpanded);
-
-			toolPage.setSideExpanded(!toolPage.getSideExpanded());
-        },
-        onItemSelect : function (oItem) {
-            this.getRouter().navTo(oItem.getParameter('item').getKey());
-        },
+        }
+        
 
     });
 }

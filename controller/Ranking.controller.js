@@ -55,30 +55,7 @@ sap.ui.define([
             oModel.setProperty("/users", users);
             this.setModel(oModel, 'backEnd');
 
-            var oMenuModel = new sap.ui.model.json.JSONModel();
-            var menuData = {
-                navigation: [{
-                    title: 'Todays queue',
-                    icon: 'sap-icon://employee',
-                    expanded: true,
-                    key: 'todaysQueue'
-                },
-                {
-                    title: 'Ranking',
-                    icon: 'sap-icon://sorting-ranking',
-                    expanded: true,
-                    key: 'ranking'
-                },
-                {
-                    title: 'Calendar',
-                    icon: 'sap-icon://appointment-2',
-                    expanded: true,
-                    key: 'calendar'
-                }
-                ]
-            };
-            oMenuModel.setData(menuData);
-            this.setModel(oMenuModel, 'menu');
+           
             this.getUsers();
             this.getTrips();
 
@@ -122,9 +99,9 @@ sap.ui.define([
                             trip.travelers.find((o, i) => {
                                 if (o.id.path == named_user.id.path) {
                                     var toAdd = (o.oneWay == true) ? 0.5 : 1;
-                                    named_user.travelingScore = (named_user.travelingScore == undefined) ? 1 : named_user.travelingScore + toAdd;
+                                    named_user.travelingScore = (named_user.travelingScore == undefined) ? toAdd : named_user.travelingScore + toAdd;
                                     if (o.isDriving == true && trip.travelers.length == named_users.length) {
-                                        named_user.drivingScore = (named_user.drivingScore == undefined) ? 1 : named_user.drivingScore + toAdd;
+                                        named_user.drivingScore = (named_user.drivingScore == undefined) ? toAdd : named_user.drivingScore + toAdd;
                                     } else if (o.isDriving == true) {
                                         trip.travelers.find((o2, j) => {
                                             if (o2.id.path != named_user.id.path) {
@@ -267,20 +244,6 @@ sap.ui.define([
             this.getRouter().navTo("object", {
                 objectId: oItem.getBindingContext("backEnd2").getProperty("ObjectID")
             });
-        },
-
-
-        onSideNavButtonPress: function () {
-            var viewId = this.getView().getId();
-            var toolPage = sap.ui.getCore().byId(viewId + "--toolPage");
-            var sideExpanded = toolPage.getSideExpanded();
-
-            // this._setToggleButtonTooltip(sideExpanded);
-
-            toolPage.setSideExpanded(!toolPage.getSideExpanded());
-        },
-        onItemSelect: function (oItem) {
-            this.getRouter().navTo(oItem.getParameter('item').getKey());
         },
 
         showGraph: function () {

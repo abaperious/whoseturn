@@ -28,7 +28,20 @@ sap.ui.define([
 				// this.getOwnerComponent().getModel().attachMetadataFailed(fnSetAppNotBusy);
 				// //apply content density mode to root view
 				// this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
-			}
+			},
+			
+		onSideNavButtonPress : function() {
+			var viewId = this.getView().getId();
+			var toolPage = sap.ui.getCore().byId(viewId + "--toolPage");
+			var sideExpanded = toolPage.getSideExpanded();
+
+			// this._setToggleButtonTooltip(sideExpanded);
+
+			toolPage.setSideExpanded(!toolPage.getSideExpanded());
+        },
+        onItemSelect : function (oItem) {
+            this.getRouter().navTo(oItem.getParameter('item').getKey());
+        },
 		});
 
 	}

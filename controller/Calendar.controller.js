@@ -451,29 +451,6 @@ function (Controller, JSONModel, MessageBox) {
             });
             this.getView().setModel(oModel);
 
-            var oMenuModel = new sap.ui.model.json.JSONModel();
-            var menuData = { navigation: [{
-                    title: 'Todays queue',
-                    icon: 'sap-icon://employee',
-                    expanded: true,
-                    key: 'todaysQueue'
-                },
-                {
-                    title: 'Ranking',
-                    icon: 'sap-icon://sorting-ranking',
-                    expanded: true,
-                    key: 'ranking'
-                },
-                {
-                    title: 'Calendar',
-                    icon: 'sap-icon://appointment-2',
-                    expanded: true,
-                    key: 'calendar'
-                }
-            ]};
-            oMenuModel.setData(menuData);
-            this.getView().setModel(oMenuModel, 'menu');
-
         },
 
         handleAppointmentSelect: function (oEvent) {
