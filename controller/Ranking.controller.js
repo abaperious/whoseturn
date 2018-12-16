@@ -80,6 +80,36 @@ sap.ui.define([
             });
 
         },
+        check_and_split: function (trips) {
+            for (let index = 0; index < trips.length; index++) {
+                
+                var trip = trips[index];
+                var hasOneWay = false;
+                var hasBothWays = false;
+
+                trip.travelers.find((o, i) => {
+                    if (o.oneWay == true) {
+                        hasOneWay = true;
+                    } else if(o.oneWay == false){
+                        hasBothWays = true;
+                    }
+                });
+                if (hasOneWay&&hasBothWays) {
+                    //we split into 2 trips
+                    var splittedTrip = {};
+                    splittedTrip.date = ""+trip.date;
+                    splittedTrip.travelers = [];
+                    trip.travelers.find((o, i)=>{
+                        if (o.oneWay == false) {
+                            trip.travelers[i].oneWay = true;
+                            splittedTrip.travelers.push(trip.travelers[i]);
+                        }
+                    });
+                    trips.push(splittedTrip);
+                }
+            }
+            return trips;
+        },
         getTrips: function () {
             var trips = [];
             var that = this;
@@ -87,12 +117,21 @@ sap.ui.define([
 
             db.collection("trips").get().then(function (doc) {
                 var named_users = that.getModel('backEnd').getProperty("/users");
+                
                 for (let index = 0; index < doc.docs.length; index++) {
                     var element = doc.docs[index];
                     var trip = {
                         date: element.data().date,
                         travelers: element.data().travelers
                     };
+
+                    trips.push(trip);
+                    console.log(element.data().name);
+
+                }
+                that.check_and_split(trips);
+                for (let index = 0; index < trips.length; index++) {
+                    const trip = trips[index];
                     if (trip.travelers.length > 1) {
                         for (let index = 0; index < named_users.length; index++) {
                             var named_user = named_users[index];
@@ -123,10 +162,6 @@ sap.ui.define([
                             named_user.actualDrivingScore = named_user.drivingScore;
                         }
                     }
-
-                    trips.push(trip);
-                    console.log(element.data().name);
-
                 }
                 // calculate points
                 that.getModel('backEnd').setProperty("/users", named_users);

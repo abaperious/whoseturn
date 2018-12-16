@@ -1,9 +1,9 @@
 var http = require("http"),
     url = require("url"),
-    httpProxy = require('http-proxy'),
+    // httpProxy = require('http-proxy'),
     path = require("path"),
     fs = require("fs"),
-    port = process.argv[2] || 8888,
+    port = process.argv[2] || 8888;
     ////////////////////////////////////////////////////////////////////////////
     // Adjust this settings to your needs for proxying the backend requests   //
     ////////////////////////////////////////////////////////////////////////////
@@ -17,40 +17,40 @@ var http = require("http"),
     };
 
 
-var proxy = httpProxy.createProxyServer();
+// var proxy = httpProxy.createProxyServer();
 
 http.createServer(function(request, response) {
 
   var uri = url.parse(request.url).pathname,
     filename = path.join(process.cwd(), uri);
 
-  if (uri.indexOf(proxy_cfg.prefix) === 0) {
-    proxy.on('error', function (err, req, res) {
-      //console.log("backend error");
-      //console.log(err);
-    });
-    proxy.on('proxyRes', function (proxyRes, req, res) {
-      //console.log('RAW Response from the target', JSON.stringify(proxyRes.headers, true, 2));
-    });
-    proxy.on('close', function (req, socket, head) {
-      // view disconnected websocket connections
-      //console.log('Client disconnected');
-    });
+  // if (uri.indexOf(proxy_cfg.prefix) === 0) {
+    // proxy.on('error', function (err, req, res) {
+    //   //console.log("backend error");
+    //   //console.log(err);
+    // });
+    // proxy.on('proxyRes', function (proxyRes, req, res) {
+    //   //console.log('RAW Response from the target', JSON.stringify(proxyRes.headers, true, 2));
+    // });
+    // proxy.on('close', function (req, socket, head) {
+    //   // view disconnected websocket connections
+    //   //console.log('Client disconnected');
+    // });
 
     // We have to set the host of the request to the our remote server
     // It currently contains localhost... which leads to problems on some
     // servers
-    request.headers.host = proxy_cfg.host;
-    // cut the prefix from the beginning of the url
-    // request.url = request.url.slice(request.url.indexOf("/", 1));
-    request.url = request.url.slice(proxy_cfg.prefix.length);
-    proxy.web(request, response, {
-      // cause we use this script only during development and testing we
-      // have a http connection. For https we have to do some additional
-      // proxy configuration
-      target: 'http://' + proxy_cfg.host + (proxy_cfg.port ? ':' + proxy_cfg.port : '') + '/'
-    });
-  } else {
+    // request.headers.host = proxy_cfg.host;
+    // // cut the prefix from the beginning of the url
+    // // request.url = request.url.slice(request.url.indexOf("/", 1));
+    // request.url = request.url.slice(proxy_cfg.prefix.length);
+    // proxy.web(request, response, {
+    //   // cause we use this script only during development and testing we
+    //   // have a http connection. For https we have to do some additional
+    //   // proxy configuration
+    //   target: 'http://' + proxy_cfg.host + (proxy_cfg.port ? ':' + proxy_cfg.port : '') + '/'
+    // });
+  // } else {
 
     fs.exists(filename, function(exists) {
       if (!exists) {
@@ -80,6 +80,7 @@ http.createServer(function(request, response) {
       });
     });
   }
-}).listen(parseInt(port, 10));
+// }
+).listen(parseInt(port, 10));
 
 console.log("Static file server running at\n  => http://localhost:" + port + "/\nCTRL + C to shutdown");
