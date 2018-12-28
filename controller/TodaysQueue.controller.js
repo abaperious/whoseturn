@@ -57,6 +57,27 @@ sap.ui.define([
             var oDate = new Date();
             var users = [];
             oModel.setProperty("/currentDate", oDate);
+            var currenciesData = [
+                {
+                    currName : "Euro",
+                    currCode : "EU",
+                    group : "fav"
+                },{
+                    currName : "US Dollar",
+                    currCode : "USD",
+                    group : "fav"
+                },
+                {
+                    currName : "rubel",
+                    currCode : "RU",
+                    group : "rest"
+                },{
+                    currName : "zloty",
+                    currCode : "PLN",
+                    group : "rest"
+                }
+            ];
+            oModel.setProperty("/Currencies", currenciesData);
             oModel.setProperty("/users", users);
             this.setModel(oModel, 'backEnd');
 

@@ -2,7 +2,9 @@
 	xmlns="sap.m" 
 	xmlns:mvc="sap.ui.core.mvc" 
 	xmlns:semantic="sap.f.semantic" 
-	xmlns:tnt="sap.tnt" displayBlock="true">
+	xmlns:tnt="sap.tnt" displayBlock="true"
+	xmlns:arvato="sap.ui.demo.worklist.controller"
+	xmlns:core="sap.ui.core" >
 
 	<Page>
 		<ScrollContainer id="root1" horizontal="false" vertical="true" height="100%">
@@ -44,6 +46,14 @@
 				</items>
 			</Table>
 			<Button text="Submit" press="onSubmitPress"/>
+
+			<arvato:ArvatoComboBox items="{path:'backEnd>/Currencies', sorter: {
+					path: 'group',
+					descending: false,
+					group: true
+				}}">
+            	<core:Item key="{backEnd>currCode}" text="{backEnd>currName}" />
+            </arvato:ArvatoComboBox>
 		</ScrollContainer>
 	</Page>
 </mvc:View>
