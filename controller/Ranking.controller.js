@@ -130,6 +130,21 @@ sap.ui.define([
 
                 }
                 that.check_and_split(trips);
+
+                trips.sort(function(a,b){
+                    if(a.date > b.date ){return 1;}return -1;
+                });
+                // to delete trips with magda
+                // trips.splice(38);
+                // temporary get rid of artur
+                trips = trips.filter(function (item) {
+                    return item.date >= "2019-02-12";
+                });
+
+                named_users = named_users.filter(function(item){
+                    return item.id.path != 'users/1'
+                });
+
                 for (let index = 0; index < trips.length; index++) {
                     const trip = trips[index];
                     if (trip.travelers.length > 1) {
@@ -179,18 +194,37 @@ sap.ui.define([
                     if (user.vsRating != undefined) {
                         for (let j = 0; j < user.vsRating.length; j++) {
                             const vsRat = user.vsRating[j];
-                            user.scoreFromVS += vsRat.score;
-
+                            
                             named_users.find((o, i) => {
                                 if (o.id == vsRat.name) {
-                                    named_users[i].actualDrivingScore -= vsRat.score;
+                                    var vsFound = false;
+                                    o.vsRating.find((o2,i2)=>{
+                                        if(o2.name == user.id  ){
+                                            // named_users[i].vsRating[i2].score -= vsRat.score;
+                                            // vsFound = true;
+                                        }
+                                    });
+                                    if (vsFound == false) {
+                                        named_users[i].actualDrivingScore -= vsRat.score;    
+                                    }
+                                    
                                 }
                             });
+                            user.scoreFromVS += vsRat.score;
                         }
+                    }
+                    if (user.scoreFromVS<0) {
+                        user.actualDrivingScore += user.scoreFromVS;
+                        user.scoreFromVS = 0;
+                    }
+                    if (user.actualDrivingScore<0) {
+                        user.scoreFromVS += user.actualDrivingScore;
+                        user.actualDrivingScore = 0;
                     }
                     named_users[index] = user;
                 }
                 for (let index = 0; index < named_users.length; index++) {
+                    
                     var user = named_users[index];
                     namesOnGraph.push(user.name);
                     drivingOnGraph.push(user.actualDrivingScore);
