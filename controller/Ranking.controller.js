@@ -122,7 +122,9 @@ sap.ui.define([
                     var element = doc.docs[index];
                     var trip = {
                         date: element.data().date,
-                        travelers: element.data().travelers
+                        travelers: element.data().travelers.sort(function (a,b) {
+                            return a.id.path<b.id.path?-1:1;
+                        })
                     };
 
                     trips.push(trip);
@@ -183,7 +185,7 @@ sap.ui.define([
                 that.getModel('backEnd').setProperty("/trips", trips);
                 named_users.forEach(o => {
                     o.id = o.id.path;
-
+                    o.actualDrivingScore = 0;
                 });
 
 
@@ -191,28 +193,49 @@ sap.ui.define([
                     var user = named_users[index];
                     user.scoreFromVS = 0;
                     
+                    
                     if (user.vsRating != undefined) {
                         for (let j = 0; j < user.vsRating.length; j++) {
                             const vsRat = user.vsRating[j];
-                            
+                            if (vsRat.score != 0) {
+                                var vsFound = false;
                             named_users.find((o, i) => {
                                 if (o.id == vsRat.name) {
-                                    var vsFound = false;
+                                    
                                     o.vsRating.find((o2,i2)=>{
                                         if(o2.name == user.id  ){
-                                            // named_users[i].vsRating[i2].score -= vsRat.score;
-                                            // vsFound = true;
+                                            named_users[i].vsRating[i2].score -= vsRat.score;
+                                            // if (named_users[i].vsRating[i2].score < 0 ) {
+                                                named_users[i].actualDrivingScore += named_users[i].vsRating[i2].score;
+                                                named_users[i].vsRating[i2].score = 0;
+                                            // } else if (named_users[i].vsRating[i2].score > 0) {
+                                            //     named_users[i].actualDrivingScore += named_users[i].vsRating[i2].score;
+                                            //     named_users[i].vsRating[i2].score = 0;
+                                            // }
+                                            vsFound = true;
                                         }
                                     });
                                     if (vsFound == false) {
-                                        named_users[i].actualDrivingScore -= vsRat.score;    
+                                        named_users[i].actualDrivingScore -= vsRat.score;   
+                                        vsFound = true; 
                                     }
                                     
                                 }
                             });
-                            user.scoreFromVS += vsRat.score;
+                            if (vsFound == false) {
+                                user.scoreFromVS += vsRat.score;
+                            }
+                            }
+                            
                         }
                     }
+                    
+                    named_users[index] = user;
+                }
+                for (let index = 0; index < named_users.length; index++) {
+                    
+                    var user = named_users[index];
+                    user.actualDrivingScore += user.drivingScore;
                     if (user.scoreFromVS<0) {
                         user.actualDrivingScore += user.scoreFromVS;
                         user.scoreFromVS = 0;
@@ -221,11 +244,6 @@ sap.ui.define([
                         user.scoreFromVS += user.actualDrivingScore;
                         user.actualDrivingScore = 0;
                     }
-                    named_users[index] = user;
-                }
-                for (let index = 0; index < named_users.length; index++) {
-                    
-                    var user = named_users[index];
                     namesOnGraph.push(user.name);
                     drivingOnGraph.push(user.actualDrivingScore);
                     versusOnGraph.push(user.scoreFromVS);
