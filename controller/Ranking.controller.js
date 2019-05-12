@@ -55,11 +55,21 @@ sap.ui.define([
             oModel.setProperty("/users", users);
             this.setModel(oModel, 'backEnd');
 
-           
+
             this.getUsers();
             this.getTrips();
 
-
+            var oTabContainer = this.getView().byId("myTabContainer");
+            oTabContainer.addEventDelegate({
+                onAfterRendering: function () {
+                    var oTabStrip = this.getAggregation("_tabStrip");
+                    var oItems = oTabStrip.getItems();
+                    for (var i = 0; i < oItems.length; i++) {
+                        var oCloseButton = oItems[i].getAggregation("_closeButton");
+                        oCloseButton.setVisible(false);
+                    }
+                }
+            }, oTabContainer);
         },
         getUsers: function () {
             var users = [];
@@ -82,7 +92,7 @@ sap.ui.define([
         },
         check_and_split: function (trips) {
             for (let index = 0; index < trips.length; index++) {
-                
+
                 var trip = trips[index];
                 var hasOneWay = false;
                 var hasBothWays = false;
@@ -90,16 +100,16 @@ sap.ui.define([
                 trip.travelers.find((o, i) => {
                     if (o.oneWay == true) {
                         hasOneWay = true;
-                    } else if(o.oneWay == false){
+                    } else if (o.oneWay == false) {
                         hasBothWays = true;
                     }
                 });
-                if (hasOneWay&&hasBothWays) {
+                if (hasOneWay && hasBothWays) {
                     //we split into 2 trips
                     var splittedTrip = {};
-                    splittedTrip.date = ""+trip.date;
+                    splittedTrip.date = "" + trip.date;
                     splittedTrip.travelers = [];
-                    trip.travelers.find((o, i)=>{
+                    trip.travelers.find((o, i) => {
                         if (o.oneWay == false) {
                             trip.travelers[i].oneWay = true;
                             splittedTrip.travelers.push(trip.travelers[i]);
@@ -117,13 +127,13 @@ sap.ui.define([
 
             db.collection("trips").get().then(function (doc) {
                 var named_users = that.getModel('backEnd').getProperty("/users");
-                
+
                 for (let index = 0; index < doc.docs.length; index++) {
                     var element = doc.docs[index];
                     var trip = {
                         date: element.data().date,
-                        travelers: element.data().travelers.sort(function (a,b) {
-                            return a.id.path<b.id.path?-1:1;
+                        travelers: element.data().travelers.sort(function (a, b) {
+                            return a.id.path < b.id.path ? -1 : 1;
                         })
                     };
 
@@ -133,53 +143,22 @@ sap.ui.define([
                 }
                 that.check_and_split(trips);
 
-                trips.sort(function(a,b){
-                    if(a.date > b.date ){return 1;}return -1;
+                trips.sort(function (a, b) {
+                    if (a.date > b.date) { return 1; } return -1;
                 });
                 // to delete trips with magda
                 // trips.splice(38);
                 // temporary get rid of artur
-                trips = trips.filter(function (item) {
-                    return item.date >= "2019-02-12";
-                });
+                // trips = trips.filter(function (item) {
+                //     return item.date <= "2019-02-12";
+                // });
 
-                named_users = named_users.filter(function(item){
-                    return item.id.path != 'users/1'
-                });
+                // named_users = named_users.filter(function(item){
+                //     return item.id.path != 'users/4'
+                // });
 
-                for (let index = 0; index < trips.length; index++) {
-                    const trip = trips[index];
-                    if (trip.travelers.length > 1) {
-                        for (let index = 0; index < named_users.length; index++) {
-                            var named_user = named_users[index];
-                            trip.travelers.find((o, i) => {
-                                if (o.id.path == named_user.id.path) {
-                                    var toAdd = (o.oneWay == true) ? 0.5 : 1;
-                                    named_user.travelingScore = (named_user.travelingScore == undefined) ? toAdd : named_user.travelingScore + toAdd;
-                                    if (o.isDriving == true && trip.travelers.length == named_users.length) {
-                                        named_user.drivingScore = (named_user.drivingScore == undefined) ? toAdd : named_user.drivingScore + toAdd;
-                                    } else if (o.isDriving == true) {
-                                        trip.travelers.find((o2, j) => {
-                                            if (o2.id.path != named_user.id.path) {
-                                                var toAddVs = (o2.oneWay == true) ? 0.5 : 1;
-                                                var vsUserIndex = named_user.vsRating.findIndex(x => x.name == o2.id.path);
-                                                if (vsUserIndex === -1) {
-                                                    named_user.vsRating.push({
-                                                        name: o2.id.path,
-                                                        score: toAddVs
-                                                    });
-                                                } else {
-                                                    named_user.vsRating[vsUserIndex].score += toAddVs;
-                                                }
-                                            }
-                                        });
-                                    }
-                                }
-                            });
-                            named_user.actualDrivingScore = named_user.drivingScore;
-                        }
-                    }
-                }
+
+
                 // calculate points
                 that.getModel('backEnd').setProperty("/users", named_users);
                 that.getModel('backEnd').setProperty("/trips", trips);
@@ -188,78 +167,50 @@ sap.ui.define([
                     o.actualDrivingScore = 0;
                 });
 
-
-                for (let index = 0; index < named_users.length; index++) {
-                    var user = named_users[index];
-                    user.scoreFromVS = 0;
-                    
-                    
-                    if (user.vsRating != undefined) {
-                        for (let j = 0; j < user.vsRating.length; j++) {
-                            const vsRat = user.vsRating[j];
-                            if (vsRat.score != 0) {
-                                var vsFound = false;
-                            named_users.find((o, i) => {
-                                if (o.id == vsRat.name) {
-                                    
-                                    o.vsRating.find((o2,i2)=>{
-                                        if(o2.name == user.id  ){
-                                            named_users[i].vsRating[i2].score -= vsRat.score;
-                                            // if (named_users[i].vsRating[i2].score < 0 ) {
-                                                named_users[i].actualDrivingScore += named_users[i].vsRating[i2].score;
-                                                named_users[i].vsRating[i2].score = 0;
-                                            // } else if (named_users[i].vsRating[i2].score > 0) {
-                                            //     named_users[i].actualDrivingScore += named_users[i].vsRating[i2].score;
-                                            //     named_users[i].vsRating[i2].score = 0;
-                                            // }
-                                            vsFound = true;
-                                        }
-                                    });
-                                    if (vsFound == false) {
-                                        named_users[i].actualDrivingScore -= vsRat.score;   
-                                        vsFound = true; 
-                                    }
-                                    
-                                }
-                            });
-                            if (vsFound == false) {
-                                user.scoreFromVS += vsRat.score;
-                            }
-                            }
-                            
-                        }
-                    }
-                    
-                    named_users[index] = user;
-                }
-                for (let index = 0; index < named_users.length; index++) {
-                    
-                    var user = named_users[index];
-                    user.actualDrivingScore += user.drivingScore;
-                    if (user.scoreFromVS<0) {
-                        user.actualDrivingScore += user.scoreFromVS;
-                        user.scoreFromVS = 0;
-                    }
-                    if (user.actualDrivingScore<0) {
-                        user.scoreFromVS += user.actualDrivingScore;
-                        user.actualDrivingScore = 0;
-                    }
-                    namesOnGraph.push(user.name);
-                    drivingOnGraph.push(user.actualDrivingScore);
-                    versusOnGraph.push(user.scoreFromVS);
-                }
-
-
                 console.log(named_users);
-                that.showGraph();
-
-                that.getModel('backEnd').setProperty("/rankingText", JSON.stringify(named_users, null, 2));
+                // that.showGraph();
+                that.build_queues(trips);
+                // that.getModel('backEnd').setProperty("/rankingText", JSON.stringify(named_users, null, 2));
             }).catch(function (error) {
                 console.log("Error getting document:", error);
             });
 
         },
+        build_queues: function (trips) {
+            var queues = [];
+            trips.forEach(trip => {
+                if (trip.travelers.length > 1) {
+                    trip.hash=trip.travelers.map((x)=>x.id.path).reduce((x,y,idx)=>
+                        idx == 0 ? y : x + ', ' + y);
+                    console.log(trip.hash);
+                    var queue = queues.find((o, i) => {
+                        if (o.size == trip.travelers.length) {
+                            return o;
+                        }
+                    });
+                    if (queue == undefined) {
+                        queues.push({
+                            name: '' + trip.travelers.length + '\'s queue',
+                            size: trip.travelers.length,
+                            subQueue: [{ hash: trip.hash, people: trip.travelers }]
+                        });
+                    } else {
+                        var existingSubQueue = queue.subQueue.find((o, i) => {
+                            if (o.hash == trip.hash) {
+                                // add points
+                                return o;
+                            }
+                        });
+                        if (existingSubQueue == undefined) {
+                            queue.subQueue.push({hash:trip.hash, people: trip.travelers});
+                        }
+                    }
+                }
+            });
 
+
+            this.getModel('backEnd').setProperty("/queues", queues);
+        },
         /* =========================================================== */
         /* event handlers                                              */
         /* =========================================================== */

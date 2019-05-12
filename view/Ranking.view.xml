@@ -4,7 +4,42 @@
 	xmlns:semantic="sap.f.semantic" 
 	xmlns:tnt="sap.tnt" displayBlock="true" 
 	xmlns:html="http://www.w3.org/1999/xhtml">
+	<TabContainer items="{ path: 'backEnd>/queues' }" id="myTabContainer" class="sapUiResponsiveContentPadding" 
+		addNewButtonPress="addNewButtonPressHandler" itemClose="itemCloseHandler">
+		<items >
+			<TabContainerItem name="{backEnd>name}" modified="{modified}">
+				<content>
+					<Table id="scoreTable" width="auto" items="{
+							path: 'backEnd>subQueue',
+							sorter: {
+								path: 'Name',
+								descending: false
+							}
+						}" 
+						noDataText="{worklistView>/tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" 
+						growing="true" growingScrollToLoad="true" updateFinished="onUpdateFinished">
+						<columns>
+							<Column id="nameColumn">
+								<Text text="{i18n>name}" id="nameColumnTitle"/>
+							</Column>
+							<Column id="points">
+								<Text text="{i18n>points}" id="pointsTitle"/>
+							</Column>
+						</columns>
 
+						<items>
+							<ColumnListItem press="onPress">
+								<cells>
+									<ObjectIdentifier title="{backEnd>p}"/>
+									<Text text="{backEnd>points}"/>
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+				</content>
+			</TabContainerItem>
+		</items>
+	</TabContainer>
 	<Page>
 		<ScrollContainer id="root2" horizontal="false" vertical="true" height="100%">
 			<Text id="rankingText" text="{
